@@ -1,0 +1,23 @@
+version: '3'
+services:
+  nginx:
+    #image: nginx:1.21.5-alpine
+    build: ./ubuntu/
+    ports:
+      - 8080:80
+    volumes:
+      - ./proxy/:/etc/proxy/
+    container_name: myweb-proxy
+    depends_on:
+      - web
+      - api
+  web:
+    image: strm/helloworld-http
+    ports:
+      - 3000:80
+    container_name: myweb-web
+  api:
+    image: strm/helloworld-http
+    ports:
+      - 3100:80
+    container_name: myweb-api
